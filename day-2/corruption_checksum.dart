@@ -18,6 +18,9 @@ class Spreadsheet {
 
   int get checksum => _rows.fold(0, (checksum, row) => checksum + row.checksum);
 
+  int get evenlyDivisibleChecksum =>
+      _rows.fold(0, (checksum, row) => checksum + row.evenlyDivisibleChecksum);
+
   @override
   bool operator ==(other) {
     if (other == null || !(other is Spreadsheet)) return false;
@@ -31,6 +34,18 @@ class Row {
   Row(this._values);
 
   int get checksum => _values.reduce(max) - _values.reduce(min);
+
+  int get evenlyDivisibleChecksum {
+    for (var i = 0; i < _values.length; i++) {
+      var value1 = _values[i];
+      for (var j = i + 1; j < _values.length; j++) {
+        var value2 = _values[j];
+        if (value1 % value2 == 0 || value2 % value1 == 0) {
+          return max(value1, value2) ~/ min(value1, value2);
+        }
+      }
+    }
+  }
 
   @override
   bool operator ==(other) {
@@ -53,4 +68,7 @@ bool _compareLists<T>(List<T> list1, List<T> list2) {
 void main() {
   var input = new File('part1.txt').readAsStringSync();
   print(CorruptionChecksum.getSpreadsheet(input).checksum);
+
+  input = new File('part2.txt').readAsStringSync();
+  print(CorruptionChecksum.getSpreadsheet(input).evenlyDivisibleChecksum);
 }

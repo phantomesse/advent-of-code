@@ -41,4 +41,31 @@ Future main() async {
           18);
     });
   });
+
+  group('$CorruptionChecksum part 2', () {
+    test(
+        'In the first row, the only two numbers that evenly divide are 8 and 2;'
+        'the result of this division is 4', () {
+      expect(new Row([5, 9, 2, 8]).evenlyDivisibleChecksum, 4);
+    });
+
+    test('In the second row, the two numbers are 9 and 3; the result is 3', () {
+      expect(new Row([9, 4, 7, 3]).evenlyDivisibleChecksum, 3);
+    });
+
+    test('In the third row, the result is 2', () {
+      expect(new Row([3, 8, 6, 5]).evenlyDivisibleChecksum, 2);
+    });
+
+    test('The spreadsheet\'s evenly divisible checksum would be 4 + 3 + 2 = 9',
+        () {
+      expect(
+          new Spreadsheet([
+            new Row([5, 9, 2, 8]),
+            new Row([9, 4, 7, 3]),
+            new Row([3, 8, 6, 5])
+          ]).evenlyDivisibleChecksum,
+          9);
+    });
+  });
 }
