@@ -1,0 +1,4 @@
+name: inverse_captcha
+dev_dependencies:
+  path: '>=1.0.0 <2.0.0'
+  test: '>=0.12.20 <=0.13.0'
