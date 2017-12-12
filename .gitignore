@@ -3,3 +3,4 @@
 .pub
 *.iml
 *.lock
+node_modules
