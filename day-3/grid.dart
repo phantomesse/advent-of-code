@@ -19,7 +19,7 @@ abstract class Grid {
   }
 
   Square createSquare(int number) {
-    var square = new Square()..number = number;
+    var square = new Square();
 
     // Base case.
     if (squares.isEmpty) {
