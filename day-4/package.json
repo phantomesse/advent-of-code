@@ -1,0 +1,15 @@
+{
+  "name": "high-entropy-passphrases",
+  "version": "1.0.0",
+  "description": "",
+  "main": "high-entropy-passphrases-test.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
