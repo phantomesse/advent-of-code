@@ -1,0 +1,15 @@
+{
+  "name": "twisty-trampolines",
+  "version": "1.0.0",
+  "description": "",
+  "main": "twisty-trampolines.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
