@@ -4,3 +4,4 @@
 *.iml
 *.lock
 node_modules
+out
