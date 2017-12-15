@@ -55,3 +55,15 @@ describe('Escape TwistyTrampoline', function() {
     assert.equal(trampoline.getStepCountToEscape(), 5);
   });
 });
+
+describe('Escape TwistyTrampoline custom offset function', function() {
+  var trampoline = new TwistyTrampoline([0, 3, 0, 1, -3], function(offset) {
+    if (offset >= 3) return offset - 1;
+    return offset + 1;
+  });
+
+  it('escapes the trampoline in 10 steps', function() {
+    assert.equal(trampoline.getStepCountToEscape(), 10);
+    assert.deepEqual(trampoline.jumpOffsets, [2, 3, 2, 3, -1]);
+  });
+});
