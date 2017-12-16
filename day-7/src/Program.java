@@ -3,28 +3,31 @@ import java.util.List;
 public class Program {
   private String name;
   private int weight;
-  private List<String> childrenProgramNames;
-  private Program parentProgram;
+  private List<Program> children;
+  private Program parent;
 
-  public Program(String name, int weight, List<String> childrenProgramNames) {
+  public Program(String name, int weight) {
     this.name = name;
     this.weight = weight;
-    this.childrenProgramNames = childrenProgramNames;
   }
 
   public String getName() {
     return name;
   }
 
-  public List<String> getChildrenProgramNames() {
-    return childrenProgramNames;
+  public int getWeight() {
+    return weight;
   }
 
-  public void setParentProgram(Program program) {
-    this.parentProgram = program;
+  public void setChildren(List<Program> children) {
+    this.children = children;
+  }
+
+  public void setParent(Program parent) {
+    this.parent = parent;
   }
 
   public boolean isRoot() {
-    return parentProgram == null;
+    return parent == null;
   }
 }
