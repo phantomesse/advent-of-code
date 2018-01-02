@@ -23,6 +23,14 @@ public class Program {
     return weight;
   }
 
+  public int getBranchWeight() {
+    int weight = getWeight();
+    for (Program child : children) {
+      weight += child.getBranchWeight();
+    }
+    return weight;
+  }
+
   public void setParent(Program parent) {
     this.parent = parent;
   }

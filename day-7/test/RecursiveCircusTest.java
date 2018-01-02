@@ -34,6 +34,23 @@ public class RecursiveCircusTest {
   }
 
   @Test
+  public void testBranchWeights() {
+    assertBranchWeight("pbga", 66);
+    assertBranchWeight("xhth", 57);
+    assertBranchWeight("ebii", 61);
+    assertBranchWeight("havc", 66);
+    assertBranchWeight("ktlj", 57);
+    assertBranchWeight("fwft", 243);
+    assertBranchWeight("qoyq", 66);
+    assertBranchWeight("padx", 243);
+    assertBranchWeight("tknk", 778);
+    assertBranchWeight("jptl", 61);
+    assertBranchWeight("ugml", 251);
+    assertBranchWeight("gyxo", 61);
+    assertBranchWeight("cntj", 57);
+  }
+
+  @Test
   public void testParent() {
     assertParent("pbga", "padx");
     assertParent("xhth", "fwft");
@@ -81,8 +98,17 @@ public class RecursiveCircusTest {
     assertEquals("tknk", circus.getRootProgramName());
   }
 
+  @Test
+  public void testUnbalancedProgram() {
+    assertEquals("ugml", circus.getUnbalancedProgramName());
+  }
+
   private void assertWeight(String programName, int expectedWeight) {
     assertEquals(expectedWeight, circus.getProgram(programName).getWeight());
+  }
+
+  private void assertBranchWeight(String programName, int expectedWeight) {
+    assertEquals(expectedWeight, circus.getProgram(programName).getBranchWeight());
   }
 
   private void assertParent(String programName, String expectedParentName) {
