@@ -14,7 +14,58 @@ public class RecursiveCircus {
     return root.getName();
   }
 
-  private Program parseInput(String filePath) throws IOException {
+  public String getUnbalancedProgramName() {
+    return getUnbalancedProgramName(root);
+  }
+
+  private static String getUnbalancedProgramName(Program root) {
+    List<Program> children = root.getChildren();
+    if (children == null) return null;
+
+    List<Program> weight1 = new ArrayList<>();
+    List<Program> weight2 = new ArrayList<>();
+    for (Program child : children) {
+      if (weight1.isEmpty()) {
+        weight1.add(child);
+        continue;
+      }
+
+      if (child.getBranchWeight() == weight1.get(0).getBranchWeight()) {
+        weight1.add(child);
+      } else {
+        weight2.add(child);
+      }
+    }
+
+    if (weight2.isEmpty()) {
+      // All children branches are balanced.
+      for (Program child : children) {
+        String unbalancedProgramName = getUnbalancedProgramName(child);
+        if (unbalancedProgramName != null) return unbalancedProgramName;
+      }
+      return null;
+    }
+
+    return weight1.size() == 1 ? weight1.get(0).getName() : weight2.get(0).getName();
+  }
+
+  public Program findProgram(String programName) {
+    return findProgram(programName, root);
+  }
+
+  private static Program findProgram(String name, Program root) {
+    if (root.getName().equals(name)) return root;
+    if (root.getChildren() == null) return null;
+
+    for (Program child : root.getChildren()) {
+      Program program = findProgram(name, child);
+      if (program != null) return program;
+    }
+
+    return null;
+  }
+
+  private static Program parseInput(String filePath) throws IOException {
     Map<String, Program> nameToProgramNameMap = new HashMap<>();
     Map<String, List<String>> nameToChildrenNamesMap = new HashMap<>();
 
@@ -58,5 +109,17 @@ public class RecursiveCircus {
   public static void main(String[] args) throws IOException {
     RecursiveCircus circus = new RecursiveCircus("day-7/src/part1.txt");
     System.out.println("Part 1: " + circus.getRootProgramName());
+
+    circus = new RecursiveCircus("day-7/src/part1.txt");
+    Program unbalancedProgram = circus.findProgram(circus.getUnbalancedProgramName());
+    int balancedBranchWeight = unbalancedProgram.getParent().getChildren().stream().filter(program -> program.getName
+        () != unbalancedProgram.getName()).findAny().get().getBranchWeight();
+    int shouldBeWeight;
+    if (balancedBranchWeight > unbalancedProgram.getBranchWeight()) {
+      shouldBeWeight = unbalancedProgram.getWeight() + (balancedBranchWeight - unbalancedProgram.getBranchWeight());
+    } else {
+      shouldBeWeight = unbalancedProgram.getWeight() - (unbalancedProgram.getBranchWeight() - balancedBranchWeight);
+    }
+    System.out.println("Part 2: " + shouldBeWeight);
   }
 }
