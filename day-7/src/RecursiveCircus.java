@@ -51,9 +51,10 @@ public class RecursiveCircus {
 
     circus = Utils.parseInput("day-7/src/part2.txt");
     Program unbalancedProgram = circus.getProgram(circus.getUnbalancedProgramName());
-    System.out.println("Part 2: " + unbalancedProgram.getSiblings().get(0).getBranchWeight());
-    for (Program child : unbalancedProgram.getParent().getChildren()) {
-      System.out.println(child.getName() + " " + child.getBranchWeight());
-    }
+    int expectedBranchWeight = unbalancedProgram.getSiblings().get(0).getBranchWeight();
+    System.out.println("Part 2: ");
+    System.out.println("\tExpected branch weight: " + expectedBranchWeight);
+    System.out.println("\tCurrent branch weight: " + unbalancedProgram.getBranchWeight());
+    System.out.println("\tCurrent weight: " + unbalancedProgram.getWeight());
   }
 }
