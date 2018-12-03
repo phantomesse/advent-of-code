@@ -1,0 +1,12 @@
+{
+  "name": "day-2",
+  "version": "1.0.0",
+  "main": "solution.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
