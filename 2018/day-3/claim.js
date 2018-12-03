@@ -14,9 +14,17 @@ class Claim {
     this.height = parseInt(dimensions[1]);
   }
 
-  containsPoint(x, y) {
-    return x >= this.x && x < this.x + this.width &&
-      y >= this.y && y < this.y + this.height;
+  get points() {
+    const points = [];
+    for (let x = this.x; x < this.x + this.width; x++) {
+      for (let y = this.y; y < this.y + this.height; y++) {
+        points.push({
+          x: x,
+          y: y
+        });
+      }
+    }
+    return points;
   }
 }
 
