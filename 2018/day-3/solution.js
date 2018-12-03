@@ -1,9 +1,14 @@
 'use strict';
 
 const fs = require('fs');
+const Claim = require('./claim').Claim;
+const Fabric = require('./fabric').Fabric;
 
 function part1(inputFilePath) {
-  const data = fs.readFileSync(inputFilePath, 'utf8');
+  const claims = fs.readFileSync(inputFilePath, 'utf8').split('\n')
+    .map((input) => new Claim(input));
+  const fabric = new Fabric(claims);
+  return fabric.getOverlappingSquareCount();
 }
 
 function part2(inputFilePath) {
@@ -11,8 +16,8 @@ function part2(inputFilePath) {
 }
 
 function main() {
-  console.log(part1('input.txt'));
-  console.log(part2('input.txt'));
+  console.log('Part 1: ' + part1('input.txt'));
+  //  console.log(part2('input.txt'));
 }
 
 if (require.main === module) main();
