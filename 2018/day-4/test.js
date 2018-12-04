@@ -7,6 +7,10 @@ describe('', function() {
   before(function() {});
 
   it('', function() {
-    assert.equal(true, true);
+    assert.equal(solution.part1('part1-test-input.txt'), 240);
+  });
+
+  it('', function() {
+    assert.equal(solution.part2('part1-test-input.txt'), 4455);
   });
 });
