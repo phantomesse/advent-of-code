@@ -1,0 +1,4 @@
+name: day5
+dev_dependencies:
+  path: 'any'
+  test: 'any'
