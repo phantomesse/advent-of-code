@@ -1,15 +1,16 @@
 import 'dart:io';
+import 'grid.dart';
 
 void part1(String input) {
-  print('Part 1');
+  print('Part 1 ${Grid(input).largestFiniteArea}');
 }
 
 void part2(String input) {
-  print('Part 2');
+  print('Part 2 ${Grid(input).getRegionSize(10000)}');
 }
 
 void main() {
-  final input = new File('input.txt').readAsStringSync();
-  part1(input);
-  part2(input);
+  final inputFileName = 'input.txt';
+  part1(inputFileName);
+  part2(inputFileName);
 }
