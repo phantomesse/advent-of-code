@@ -15,7 +15,7 @@ class Step implements Comparable<Step> {
 
   String get name => _name;
   
-  int get seconds => 1 + name.codeUnitAt(0) - 'A'.codeUnitAt(0);
+  int get seconds => 61 + name.codeUnitAt(0) - 'A'.codeUnitAt(0);
 
   @override
   String toString() =>

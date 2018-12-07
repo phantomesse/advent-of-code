@@ -84,12 +84,24 @@ class Instructions {
 
   int getSeconds(int workerCount) {
     int time = -1;
-    final steps = List.from(firstSteps);
+    final steps = stepsMap.values.toList()..sort(); //List.from(firstSteps);
     final workers = List.generate(workerCount, (index) => Worker(index));
+    final workingWorkers = <Worker>[];
 
-    while (steps.isNotEmpty) {
+    var done = '';
+    while (steps.isNotEmpty || workingWorkers.isNotEmpty) {
+      final workersToRemove = <Worker>[];
+      for (final worker in workingWorkers) {
+        if (worker.timeToCompletion == 1) {
+          done += worker.currentTask.name;
+          workersToRemove.add(worker);
+        }
+      }
+      workingWorkers.removeWhere((worker) => workersToRemove.contains(worker));
+      if (steps.isEmpty && workingWorkers.isEmpty) break;
+
       // Print status.
-      print('\ntime = $time');
+      print('\ntime = $time \t $done');
       for (final worker in workers) {
         print(worker);
       }
@@ -106,39 +118,45 @@ class Instructions {
 
       // Give each free worker a task.
       final blockingStepNames = <String>[];
-      Step lastSeenStep;
+      Set<Step> blockedSteps = new Set();
       while (steps.isNotEmpty) {
-        // Pop a step.
-        final step = steps[0];
+        if (blockedSteps.contains(steps[0])) break;
 
-        if (lastSeenStep == step) break;
+        // Pop a step.
+        final step = steps.removeAt(0);
 
         // If step is still blocked, push back to stack.
         var isBlocked = false;
-        for (final worker in workers) {
-          if (worker.currentTask != null &&
-              step.blockedByStepNames.contains(worker.currentTask.name) &&
-              !worker.isFree) {
+        for (final stepName in step.blockedByStepNames) {
+          if (!done.contains(stepName)) {
             isBlocked = true;
             break;
           }
         }
-        lastSeenStep = step;
-        if (isBlocked) continue;
-        steps.removeAt(0);
+        print('Step ${step.name} is blocked = $isBlocked');
+        if (isBlocked) {
+          steps.add(step);
+          blockedSteps.add(step);
+          continue;
+        }
 
         // Give a free worker a task.
         final worker = freeWorkers.removeAt(0);
         worker.giveTask(step);
         blockingStepNames.addAll(step.blockingStepNames);
+        workingWorkers.add(worker);
         if (freeWorkers.isEmpty) break;
       }
 
       // Push blocking steps in alphabetical order.
-      steps.addAll(blockingStepNames.map((name) => stepsMap[name]));
+      for (final name in blockingStepNames) {
+        final step = stepsMap[name];
+        if (steps.contains(step)) continue;
+        steps.add(step);
+      }
       steps.sort();
     }
 
-    return time;
+    return time + 1;
   }
 }
