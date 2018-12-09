@@ -1,0 +1,11 @@
+{
+  "name": "day-9",
+  "main": "solution.js",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "start": "node solution.js",
+    "test": "mocha"
+  }
+}
