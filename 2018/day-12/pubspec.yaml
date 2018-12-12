@@ -1,0 +1,4 @@
+name: advent_of_code
+dev_dependencies:
+  path: 'any'
+  test: 'any'
