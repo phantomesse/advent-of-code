@@ -35,6 +35,7 @@ void main() {
         mines.printMines();
         crashed = !mines.moveCarts();
       }
+      mines.printMines();
       print(mines.crashPoint);
     });
   });

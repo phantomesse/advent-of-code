@@ -50,6 +50,13 @@ class Mines {
     for (var y = 0; y < _mines.length; y++) {
       var rowStr = '';
       for (var x = 0; x < _mines[y].length; x++) {
+        if (crashPoint != null &&
+            crashPoint.first == x &&
+            crashPoint.last == y) {
+          rowStr += 'X';
+          continue;
+        }
+
         var hadCart = false;
         for (final cart in carts) {
           if (cart.x == x && cart.y == y) {
@@ -90,9 +97,7 @@ class Mines {
 
     for (final otherCart in carts) {
       if (cart == otherCart) continue;
-      if (cart.x == otherCart.x && cart.y == otherCart.y) {
-        return false;
-      }
+      if (cart.x == otherCart.x && cart.y == otherCart.y) return false;
     }
 
     if (next == Track.intersection) _handleIntersection(cart);

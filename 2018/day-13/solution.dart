@@ -5,9 +5,10 @@ void part1() {
   print('Part 1: ');
   var crashed = false;
   while (!crashed) {
-    mines.printMines();
+//    mines.printMines();
     crashed = !mines.moveCarts();
   }
+  mines.printMines();
   print(mines.crashPoint);
 }
 
