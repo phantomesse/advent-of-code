@@ -4,10 +4,11 @@ import 'note.dart';
 
 class Garden {
   int generation = 0;
-  final pots = <bool>[];
+  var pots = <bool>[];
   final notes = <Note>[];
   List<Note> _emptyPotNotes;
   List<Note> _fullPotNotes;
+  var zeroIndex = 0;
 
   Garden(String inputFilePath) {
     var inputs = new File(inputFilePath).readAsStringSync().split('\n');
@@ -20,9 +21,21 @@ class Garden {
   }
 
   void advanceGeneration() {
-    // Add some empty pots to the left and right.
-    pots.insertAll(0, [false, false]);
-    pots.addAll([false, false]);
+    // Add some empty pots to the left and right to make sure that either side
+    // has 5 empty pots.
+    while (!pots.sublist(0, 6).contains(true)) {
+      pots.removeAt(0);
+      zeroIndex++;
+    }
+    while (pots.sublist(0, 5).contains(true)) {
+      pots.insert(0, false);
+      zeroIndex--;
+    }
+    while (pots.sublist(pots.length - 5).contains(true)) {
+      pots.add(false);
+    }
+
+    final newPots = List<bool>.from(pots);
 
     for (int i = 2; i < pots.length - 2; i++) {
       final pot = pots[i];
@@ -38,18 +51,44 @@ class Garden {
         note = _emptyPotNotes.singleWhere((note) => note.matchesNote(pots, i),
             orElse: () => null);
       }
-      print(note);
-      if (note == null) continue;
-
-      // Transform the pot.
-      pots[i] == note.willCurrentPotHavePlantNextGeneration;
+      if (note == null) {
+        // Does not produce a plant.
+        newPots[i] = false;
+      } else {
+        // Transform the pot.
+        newPots[i] = note.willCurrentPotHavePlantNextGeneration;
+      }
     }
 
     generation++;
+    pots = newPots;
   }
 
-  @override
-  String toString() {
-    return '$generation: ${pots.map((boolean) => boolean ? '#' : '.').join()}';
+  int get potsWithPlantsCount {
+    int potsWithPlantsCount = 0;
+
+    for (var i = 0; i < pots.length; i++) {
+      if (!pots[i]) continue;
+      potsWithPlantsCount += i + zeroIndex;
+    }
+
+    return potsWithPlantsCount;
   }
+
+  int get withoutZero {
+    int potsWithPlantsCount = 0;
+
+    for (var i = 0; i < pots.length; i++) {
+      if (!pots[i]) continue;
+      potsWithPlantsCount += i;
+    }
+
+    return potsWithPlantsCount;
+  }
+
+  static String _potsToString(List<bool> pots) =>
+      pots.map((boolean) => boolean ? '#' : '.').join();
+
+  @override
+  String toString() => '$generation: ${_potsToString(pots)}';
 }

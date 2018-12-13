@@ -64,47 +64,122 @@ void main() {
     });
 
     test('Generations', () {
-      expect(garden.toString(), '0: #..#.#..##......###...###');
+      expect(garden.generation, 0);
+      expect(garden.toString(), contains('#..#.#..##......###...###'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '1: ...#...#....#.....#..#..#..#...........');
+
+      expect(garden.generation, 1);
+      expect(garden.toString(), contains('#...#....#.....#..#..#..#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '2: ...##..##...##....#..#..#..##..........');
+
+      expect(garden.generation, 2);
+      expect(garden.toString(), contains('..##..##...##....#..#..#..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '3: ..#.#...#..#.#....#..#..#...#..........');
+
+      expect(garden.generation, 3);
+      expect(garden.toString(), contains('.#.#...#..#.#....#..#..#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '4: ...#.#..#...#.#...#..#..##..##.........');
+
+      expect(garden.generation, 4);
+      expect(garden.toString(), contains('..#.#..#...#.#...#..#..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '5: ....#...##...#.#..#..#...#...#.........');
+
+      expect(garden.generation, 5);
+      expect(garden.toString(), contains('...#...##...#.#..#..#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '6: ....##.#.#....#...#..##..##..##........');
+
+      expect(garden.generation, 6);
+      expect(garden.toString(), contains('...##.#.#....#...#..##..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '7: ...#..###.#...##..#...#...#...#........');
+
+      expect(garden.generation, 7);
+      expect(garden.toString(), contains('..#..###.#...##..#...#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '8: ...#....##.#.#.#..##..##..##..##.......');
+
+      expect(garden.generation, 8);
+      expect(garden.toString(), contains('..#....##.#.#.#..##..##..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '9: ...##..#..#####....#...#...#...#.......');
+
+      expect(garden.generation, 9);
+      expect(garden.toString(), contains('..##..#..#####....#...#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '10: ..#.#..#...#.##....##..##..##..##......');
+
+      expect(garden.generation, 10);
+      expect(garden.toString(), contains('.#.#..#...#.##....##..##..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '11: ...#...##...#.#...#.#...#...#...#......');
+
+      expect(garden.generation, 11);
+      expect(garden.toString(), contains('..#...##...#.#...#.#...#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '12: ...##.#.#....#.#...#.#..##..##..##.....');
+
+      expect(garden.generation, 12);
+      expect(garden.toString(), contains('..##.#.#....#.#...#.#..##..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '13: ..#..###.#....#.#...#....#...#...#.....');
+
+      expect(garden.generation, 13);
+      expect(garden.toString(), contains('.#..###.#....#.#...#....#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '14: ..#....##.#....#.#..##...##..##..##....');
+
+      expect(garden.generation, 14);
+      expect(garden.toString(), contains('.#....##.#....#.#..##...##..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '15: ..##..#..#.#....#....#..#.#...#...#....');
+
+      expect(garden.generation, 15);
+      expect(garden.toString(), contains('##..#..#.#....#....#..#.#...#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '16: .#.#..#...#.#...##...#...#.#..##..##...');
+
+      expect(garden.generation, 16);
+      expect(
+          garden.toString(), contains('#.#..#...#.#...##...#...#.#..##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '17: ..#...##...#.#.#.#...##...#....#...#...');
+
+      expect(garden.generation, 17);
+      expect(garden.toString(), contains('#...##...#.#.#.#...##...#....#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '18: ..##.#.#....#####.#.#.#...##...##..##..');
+
+      expect(garden.generation, 18);
+      expect(
+          garden.toString(), contains('##.#.#....#####.#.#.#...##...##..##'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '19: .#..###.#..#.#.#######.#.#.#..#.#...#..');
+
+      expect(garden.generation, 19);
+      expect(
+          garden.toString(), contains('#..###.#..#.#.#######.#.#.#..#.#...#'));
+
       garden.advanceGeneration();
-      expect(garden.toString(), '20: .#....##....#####...#######....#.#..##.');
+
+      expect(garden.generation, 20);
+      expect(
+          garden.toString(), contains('#....##....#####...#######....#.#..##'));
+
+      expect(garden.potsWithPlantsCount, 325);
+    });
+
+    test('after 20 generations', () {
+      for (var i = 0; i < 20; i++) {
+        garden.advanceGeneration();
+        print(garden);
+      }
+      expect(garden.potsWithPlantsCount, 325);
     });
   });
 }

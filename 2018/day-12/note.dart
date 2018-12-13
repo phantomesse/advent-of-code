@@ -5,19 +5,20 @@ class Note {
   bool rightPot;
   bool rightMostPot;
   bool willCurrentPotHavePlantNextGeneration;
+  List<bool> _note;
 
   Note(String input) {
-    final havePlants = input
+    _note = input
         .replaceAll(' => ', '')
         .split('')
         .map((str) => str == '#')
         .toList();
-    leftMostPot = havePlants[0];
-    leftPot = havePlants[1];
-    currentPot = havePlants[2];
-    rightPot = havePlants[3];
-    rightMostPot = havePlants[4];
-    willCurrentPotHavePlantNextGeneration = havePlants[5];
+    leftMostPot = _note[0];
+    leftPot = _note[1];
+    currentPot = _note[2];
+    rightPot = _note[3];
+    rightMostPot = _note[4];
+    willCurrentPotHavePlantNextGeneration = _note[5];
   }
 
   bool matchesNote(List<bool> pots, int currentPotIndex) {
@@ -35,7 +36,8 @@ class Note {
   }
 
   @override
-  String toString() {
-    // TODO
-  }
+  String toString() =>
+      _note.map((boolean) => boolean ? '#' : '.').join() +
+      ' => ' +
+      (willCurrentPotHavePlantNextGeneration ? '#' : '.');
 }
