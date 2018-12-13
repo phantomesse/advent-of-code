@@ -1,43 +1,29 @@
+import 'package:meta/meta.dart';
+
 class Note {
-  bool leftMostPot;
-  bool leftPot;
-  bool currentPot;
-  bool rightPot;
-  bool rightMostPot;
-  bool willCurrentPotHavePlantNextGeneration;
-  List<bool> _note;
+  String _potOrientation;
+  String _currentPot;
+  String _newPot;
 
-  Note(String input) {
-    _note = input
-        .replaceAll(' => ', '')
-        .split('')
-        .map((str) => str == '#')
-        .toList();
-    leftMostPot = _note[0];
-    leftPot = _note[1];
-    currentPot = _note[2];
-    rightPot = _note[3];
-    rightMostPot = _note[4];
-    willCurrentPotHavePlantNextGeneration = _note[5];
+  Note(String note) {
+    final input = note.split(' => ');
+    _potOrientation = input.first;
+    _currentPot = _potOrientation[2];
+    _newPot = input.last;
   }
 
-  bool matchesNote(List<bool> pots, int currentPotIndex) {
-    if (pots[currentPotIndex] != currentPot) return false;
-
-    // Check left pots.
-    if (pots[currentPotIndex - 1] != leftPot ||
-        pots[currentPotIndex - 2] != leftMostPot) return false;
-
-    // Check right pots.
-    if (pots[currentPotIndex + 1] != rightPot ||
-        pots[currentPotIndex + 2] != rightMostPot) return false;
-
-    return true;
+  bool matches(String pots, int currentPotIndex) {
+    if (pots[currentPotIndex] != _currentPot) return false;
+    final potOrientation =
+        pots.substring(currentPotIndex - 2, currentPotIndex + 3);
+    return potOrientation == _potOrientation;
   }
 
-  @override
-  String toString() =>
-      _note.map((boolean) => boolean ? '#' : '.').join() +
-      ' => ' +
-      (willCurrentPotHavePlantNextGeneration ? '#' : '.');
+  @visibleForTesting
+  String get potOrientation => _potOrientation;
+
+  @visibleForTesting
+  String get currentPot => _currentPot;
+
+  String get newPot => _newPot;
 }
