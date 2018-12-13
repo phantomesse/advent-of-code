@@ -7,6 +7,23 @@ class Cart {
     direction = _getCartDirection(inputValue);
   }
 
+  void moveForward() {
+    switch (direction) {
+      case CartDirection.right:
+        x++;
+        return;
+      case CartDirection.left:
+        x--;
+        return;
+      case CartDirection.down:
+        y++;
+        return;
+      case CartDirection.up:
+        y--;
+        return;
+    }
+  }
+
   void turnLeft() {
     switch (direction) {
       case CartDirection.right:

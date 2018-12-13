@@ -31,16 +31,11 @@ void main() {
 
     test('crash', () {
       var crashed = false;
-//      while (!crashed) {
-      mines.printMines();
-      mines.moveCarts();
-      mines.printMines();
-      mines.moveCarts();
-      mines.printMines();
-
-//        crashed = !mines.moveCarts();
-//      }
-//      print(mines.crashPoint);
+      while (!crashed) {
+        mines.printMines();
+        crashed = !mines.moveCarts();
+      }
+      print(mines.crashPoint);
     });
   });
 }

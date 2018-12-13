@@ -85,79 +85,54 @@ class Mines {
   /// Returns true if cart moved successfully and false if cart crashed into
   /// another cart.
   bool _moveCart(Cart cart) {
-    print('before cart: ${cart.x}, ${cart.y}');
-    switch (cart.direction) {
-      case CartDirection.right:
-        cart.x++;
-        final nextTrack = _mines[cart.y][cart.x];
-        if (nextTrack is Cart) return false;
+    cart.moveForward();
+    final next = _mines[cart.y][cart.x];
 
-        if (nextTrack as Track == Track.curveLeft) {
-          cart.direction = CartDirection.down;
-        }
-        if (nextTrack as Track == Track.curveRight) {
-          cart.direction = CartDirection.up;
-        }
-        if (nextTrack as Track == Track.intersection) _handleIntersection(cart);
-        return true;
-
-      case CartDirection.left:
-        cart.x--;
-        final nextTrack = _mines[cart.y][cart.x];
-        if (nextTrack is Cart) return false;
-
-        if (nextTrack as Track == Track.curveLeft) {
-          cart.direction = CartDirection.up;
-        }
-        if (nextTrack as Track == Track.curveRight) {
-          cart.direction = CartDirection.down;
-        }
-        if (nextTrack as Track == Track.intersection) _handleIntersection(cart);
-        return true;
-
-      case CartDirection.down:
-        cart.y++;
-        final nextTrack = _mines[cart.y][cart.x];
-        if (nextTrack is Cart) return false;
-
-        if (nextTrack as Track == Track.curveLeft) {
-          cart.direction = CartDirection.right;
-        }
-        if (nextTrack as Track == Track.curveRight) {
-          cart.direction = CartDirection.left;
-        }
-        if (nextTrack as Track == Track.intersection) _handleIntersection(cart);
-        return true;
-
-      case CartDirection.up:
-        cart.y--;
-        final nextTrack = _mines[cart.y][cart.x];
-        if (nextTrack is Cart) return false;
-
-        if (nextTrack as Track == Track.curveLeft) {
-          cart.direction = CartDirection.left;
-        }
-        if (nextTrack as Track == Track.curveRight) {
-          cart.direction = CartDirection.right;
-        }
-        if (nextTrack as Track == Track.intersection) _handleIntersection(cart);
-        return true;
+    for (final otherCart in carts) {
+      if (cart == otherCart) continue;
+      if (cart.x == otherCart.x && cart.y == otherCart.y) {
+        return false;
+      }
     }
 
-    throw 'something went wrong';
+    if (next == Track.intersection) _handleIntersection(cart);
+    if (next == Track.curveRight) _handleCurveRight(cart);
+    if (next == Track.curveLeft) _handleCurveLeft(cart);
+    return true;
   }
 
   void _handleIntersection(Cart cart) {
     final mod = cart.crossedIntersectionCount % 4;
-    switch (mod) {
-      case 0:
-        cart.turnLeft();
-        return;
-      case 2:
+    if (mod == 0) cart.turnLeft();
+    if (mod == 2) cart.turnRight();
+    cart.crossedIntersectionCount++;
+  }
+
+  void _handleCurveRight(Cart cart) {
+    // '/'
+    switch (cart.direction) {
+      case CartDirection.up:
+      case CartDirection.down:
         cart.turnRight();
-        return;
-      default:
-        return;
+        break;
+      case CartDirection.left:
+      case CartDirection.right:
+        cart.turnLeft();
+        break;
+    }
+  }
+
+  void _handleCurveLeft(Cart cart) {
+    // '\'
+    switch (cart.direction) {
+      case CartDirection.up:
+      case CartDirection.down:
+        cart.turnLeft();
+        break;
+      case CartDirection.left:
+      case CartDirection.right:
+        cart.turnRight();
+        break;
     }
   }
 }
