@@ -1,4 +1,4 @@
-import { getFuelRequired } from './solution';
+import { getFuelRequired, getTotalFuelRequired } from './solution';
 import { expect } from 'chai';
 
 describe('part 1', function() {
@@ -20,5 +20,15 @@ describe('part 1', function() {
 });
 
 describe('part 2', function() {
-  // TODO: write tests for part 2.
+  it('mass 14 => total fuel 2', function() {
+    expect(getTotalFuelRequired(14)).to.equal(2);
+  });
+
+  it('mass 1969 => total fuel 966', function() {
+    expect(getTotalFuelRequired(1969)).to.equal(966);
+  });
+
+  it('mass 100756 => total fuel 50346', function() {
+    expect(getTotalFuelRequired(100756)).to.equal(50346);
+  });
 });
