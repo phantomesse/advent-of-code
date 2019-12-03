@@ -130,7 +130,7 @@ function main() {
     .filter(line => line.length > 0)
     .map(line => new Wire(line));
   wires[0].draw();
-  wires[2].draw();
+  wires[2].draw;
 }
 
 if (require.main === module) main();
