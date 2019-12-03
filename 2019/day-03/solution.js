@@ -2,137 +2,64 @@
 
 const fs = require('fs');
 
-class Wires {}
-
-class Wire {
-  constructor(line) {
-    this.instructions = line.split(',');
-    this.matrix = [['o']];
-
-    let rowIndex = 0;
-    let columnIndex = 0;
-    for (let instruction of this.instructions) {
-      let direction = instruction.charAt(0);
-      let steps = parseInt(instruction.substr(1), 10);
-      if (this.matrix[rowIndex][columnIndex] != 'o') {
-        this.matrix[rowIndex][columnIndex] = '+';
-      }
-      switch (direction) {
-        case 'R': // Right
-          if (this.matrix[0].length < columnIndex + steps) {
-            this.addColumnsRightOfCentralPort(
-              columnIndex + steps - this.matrix[0].length + 1
-            );
-          }
-          for (var i = 0; i < steps; i++) {
-            columnIndex++;
-            this.matrix[rowIndex][columnIndex] = '-';
-          }
-          break;
-        case 'U': // Up
-          if (rowIndex - steps < 0) {
-            let rowCount = steps - rowIndex;
-            this.addRowsAboveCentralPort(rowCount);
-            rowIndex += rowCount;
-          }
-          for (var i = 0; i < steps; i++) {
-            rowIndex--;
-            this.matrix[rowIndex][columnIndex] = '|';
-          }
-          break;
-        case 'L': // Left
-          if (columnIndex - steps < 0) {
-            let columnCount = steps - columnIndex;
-            this.addColumnsLeftOfCentralPort(columnCount);
-            columnIndex += columnCount;
-          }
-          for (var i = 0; i < steps; i++) {
-            columnIndex--;
-            this.matrix[rowIndex][columnIndex] = '-';
-          }
-          break;
-        case 'D': // Down
-          if (this.matrix.length < rowIndex + steps) {
-            this.addRowsBelowCentralPort(
-              rowIndex + steps - this.matrix.length + 1
-            );
-          }
-          for (var i = 0; i < steps; i++) {
-            rowIndex++;
-            this.matrix[rowIndex][columnIndex] = '|';
-          }
-          break;
-      }
-    }
+function getClosestDistance(instructionStr1, instructionStr2) {
+  let points1 = _getPoints(instructionStr1);
+  let points2 = _getPoints(instructionStr2);
+  let intersectedPoints = points1.filter(point1 =>
+    points2.some(point2 => point1.x === point2.x && point1.y === point2.y)
+  );
+  let smallestDistance = Infinity;
+  for (let point of intersectedPoints) {
+    let distance = Math.abs(point.x) + Math.abs(point.y);
+    if (distance < smallestDistance) smallestDistance = distance;
   }
-
-  get centralPortLocation() {
-    for (var i = 0; i < this.matrix.length; i++) {
-      for (var j = 0; j < this.matrix[i].length; j++) {
-        if (this.matrix[i][j] == 'o') {
-          return { rowIndex: i, columnIndex: j };
-        }
-      }
-    }
-  }
-
-  draw() {
-    for (var rowIndex = 0; rowIndex < this.matrix.length; rowIndex++) {
-      console.log(this.matrix[rowIndex].join(''));
-    }
-  }
-
-  addRowsAboveCentralPort(rowCount) {
-    const columnCount = this.matrix[0].length;
-    for (var i = 0; i < rowCount; i++) {
-      let row = [];
-      for (var j = 0; j < columnCount; j++) {
-        row.push('.');
-      }
-      this.matrix.unshift(row);
-    }
-  }
-
-  addRowsBelowCentralPort(rowCount) {
-    const columnCount = this.matrix[0].length;
-    for (var i = 0; i < rowCount; i++) {
-      let row = [];
-      for (var j = 0; j < columnCount; j++) {
-        row.push('.');
-      }
-      this.matrix.push(row);
-    }
-  }
-
-  addColumnsLeftOfCentralPort(columnCount) {
-    for (var i = 0; i < this.matrix.length; i++) {
-      for (var j = 0; j < columnCount; j++) {
-        this.matrix[i].unshift('.');
-      }
-    }
-  }
-
-  addColumnsRightOfCentralPort(columnCount) {
-    for (var i = 0; i < this.matrix.length; i++) {
-      for (var j = 0; j < columnCount; j++) {
-        this.matrix[i].push('.');
-      }
-    }
-  }
+  return smallestDistance;
 }
 
-function getClosestIntersection(wire1, wire2) {}
+function _getPoints(instructionStr) {
+  let instructions = instructionStr.split(',');
+  let points = [];
+  let x = 0,
+    y = 0;
+  for (let instruction of instructions) {
+    let direction = instruction.charAt(0);
+    let steps = parseInt(instruction.substr(1), 10);
+    for (let i = 0; i < steps; i++) {
+      switch (direction) {
+        case 'U':
+          points.push({ x: x, y: --y });
+          break;
+        case 'D':
+          points.push({ x: x, y: ++y });
+          break;
+        case 'L':
+          points.push({ x: --x, y: y });
+          break;
+        case 'R':
+          points.push({ x: ++x, y: y });
+          break;
+      }
+    }
+  }
+  return points;
+}
 
 function main() {
-  let input = fs.readFileSync('input.txt', 'utf8');
-  let wires = input
-    .split('\n')
-    .filter(line => line.length > 0)
-    .map(line => new Wire(line));
-  wires[0].draw();
-  wires[2].draw;
+  let input = fs.readFileSync('input.txt', 'utf8').split('\n');
+  console.log(getClosestDistance('R8,U5,L5,D3', 'U7,R6,D4,L4'));
+  console.log(
+    getClosestDistance(
+      'R75,D30,R83,U83,L12,D49,R71,U7,L72',
+      'U62,R66,U55,R34,D71,R55,D58,R83'
+    )
+  );
+  console.log(
+    getClosestDistance(
+      'R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51',
+      'U98,R91,D20,R16,D67,R40,U7,R15,U6,R7'
+    )
+  );
+  console.log(getClosestDistance(input[0], input[1]));
 }
 
 if (require.main === module) main();
-
-module.exports.Wire = Wire;
