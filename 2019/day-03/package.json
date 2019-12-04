@@ -1,10 +1,14 @@
 {
-  "main": "solution.js",
-  "devDependencies": {
-    "mocha": "^4.0.1"
-  },
   "scripts": {
-    "start": "node solution.js",
-    "test": "mocha"
+    "start": "ts-node solution.ts",
+    "test": "mocha -r ts-node/register test.ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.14",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.2"
   }
 }
