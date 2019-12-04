@@ -24,5 +24,3 @@ describe('part 1', function() {
     expect(runIntcode('1,1,1,4,99,5,6,0,99')).to.equal('30,1,1,4,2,5,6,0,99');
   });
 });
-
-describe('part 2', function() {});
