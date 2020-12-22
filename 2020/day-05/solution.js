@@ -1,5 +1,5 @@
 const { assert } = require('console');
-const { readFileSync } = require('fs');
+const { printPart1, printPart2, readLines } = require('../utils/utils');
 
 function getSeatId(boardingPass) {
   return getRow(boardingPass) * 8 + getColumn(boardingPass);
@@ -54,19 +54,16 @@ assert(getColumn('BFFFBBFRRR') === 7);
 assert(getColumn('FFFBBBFRRR') === 7);
 assert(getColumn('BBFFBBFRLL') === 4);
 
-const boardingPasses = readFileSync('input.txt', { encoding: 'utf-8' })
-  .split('\n')
-  .filter(line => line.length > 0)
-  .map(boardingPass => getSeatId(boardingPass));
+const boardingPasses = readLines().map(boardingPass => getSeatId(boardingPass));
 
 // Part 1.
-console.log(boardingPasses.reduce((pass1, pass2) => Math.max(pass1, pass2)));
+printPart1(boardingPasses.reduce((pass1, pass2) => Math.max(pass1, pass2)));
 
 // Part 2.
 boardingPasses.sort((pass1, pass2) => parseInt(pass1) - parseInt(pass2));
 for (let i = 0; i < boardingPasses.length - 1; i++) {
   if (boardingPasses[i + 1] - boardingPasses[i] > 1) {
-    console.log(boardingPasses[i] + 1);
+    printPart2(boardingPasses[i] + 1);
     break;
   }
 }

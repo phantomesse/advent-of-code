@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { printPart1, printPart2, readGroups } = require('../utils/utils');
 
 const requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
 const eyeColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
@@ -57,18 +57,10 @@ function hasRequiredFieldsAndValidValues(data) {
   return match && data.pid === match[0];
 }
 
-const passportData = fs
-  .readFileSync('input.txt', { encoding: 'utf-8' })
-  .split('\n\n')
-  .filter(block => block.length > 0)
-  .map(block => new PassportData(block.trim()));
-
 function getValidCount(passportData, validationFn) {
   return passportData.filter(data => validationFn(data)).length;
 }
 
-// Part 1
-// console.log(getValidCount(passportData, hasRequiredFields));
-
-// Part 2
-console.log(getValidCount(passportData, hasRequiredFieldsAndValidValues));
+const passportData = readGroups().map(block => new PassportData(block.trim()));
+printPart1(getValidCount(passportData, hasRequiredFields));
+printPart2(getValidCount(passportData, hasRequiredFieldsAndValidValues));

@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs');
+const { readLines, printPart1, printPart2 } = require('../utils/utils');
 
 class Bag {
   constructor(rules) {
@@ -38,13 +38,6 @@ class Bag {
   }
 }
 
-const bags = readFileSync('input.txt', 'utf-8')
-  .split('\n')
-  .filter(line => line.length > 0)
-  .map(rules => new Bag(rules));
-const bagColorToBagMap = {};
-for (const bag of bags) bagColorToBagMap[bag.color] = bag;
-
 function part1(bagColorToBagMap) {
   let acceptableBags = [];
   for (const bag of Object.values(bagColorToBagMap)) {
@@ -57,7 +50,8 @@ function part1(bagColorToBagMap) {
   return acceptableBags.length;
 }
 
-console.log(part1(bagColorToBagMap));
-console.log(
-  bagColorToBagMap['shiny gold'].getNumberOfSubBags(bagColorToBagMap)
-);
+const bags = readLines().map(rules => new Bag(rules));
+const bagColorToBagMap = {};
+for (const bag of bags) bagColorToBagMap[bag.color] = bag;
+printPart1(part1(bagColorToBagMap));
+printPart2(bagColorToBagMap['shiny gold'].getNumberOfSubBags(bagColorToBagMap));

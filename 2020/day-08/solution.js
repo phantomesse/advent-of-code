@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { printPart1, printPart2, readLines } = require('../utils/utils');
 
 class Instruction {
   constructor(instruction) {
@@ -6,12 +6,6 @@ class Instruction {
     this.argument = parseInt(instruction.split(' ')[1]);
   }
 }
-
-const instructions = fs
-  .readFileSync('input.txt', 'utf-8')
-  .trim()
-  .split('\n')
-  .map(line => new Instruction(line));
 
 function part1(instructions) {
   const calledInstructions = [];
@@ -83,5 +77,6 @@ function part2(instructions) {
   return part1(newInstructions);
 }
 
-console.log(`Part 1: ${part1(instructions)}`);
-console.log(`Part 2: ${part2(instructions)}`);
+const instructions = readLines().map(line => new Instruction(line));
+printPart1(part1(instructions));
+printPart2(part2(instructions));

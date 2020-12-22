@@ -1,8 +1,4 @@
-const fs = require('fs');
+const { readNumbers } = require('../utils/utils');
 
-const input = fs
-  .readFileSync('test-input.txt', 'utf-8')
-  .trim()
-  .split('\n')
-  .map(line => parseInt(line));
+const input = readNumbers('test-input.txt');
 console.log(input);

@@ -1,9 +1,14 @@
-const fs = require('fs');
+const {
+  readNumbers,
+  printPart1,
+  printPart2,
+  numberSort,
+} = require('../utils/utils');
 
 function part1(preambleLength, numbers) {
   for (let i = preambleLength; i < numbers.length; i++) {
     const prevNumbers = numbers.slice(i - preambleLength, i);
-    prevNumbers.sort((a, b) => parseInt(a) - parseInt(b));
+    prevNumbers.sort(numberSort);
     const minSum = prevNumbers[0] + prevNumbers[1];
     const maxSum =
       prevNumbers[prevNumbers.length - 2] + prevNumbers[prevNumbers.length - 1];
@@ -28,11 +33,6 @@ function part2(preambleLength, numbers) {
   }
 }
 
-const numbers = fs
-  .readFileSync('input.txt', 'utf-8')
-  .trim()
-  .split('\n')
-  .map(line => parseInt(line));
-
-console.log(`Part 1: ${part1(25, numbers)}`);
-console.log(`Part 2: ${part2(25, numbers)}`);
+const numbers = readNumbers();
+printPart1(part1(25, numbers));
+printPart2(part2(25, numbers));
