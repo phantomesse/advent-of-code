@@ -4,6 +4,7 @@ const adapters = readNumbers();
 adapters.sort(numberSort);
 adapters.unshift(0);
 adapters.push(adapters.slice(-1)[0] + 3);
+
 const differenceToCountMap = {};
 for (let i = 1; i < adapters.length; i++) {
   const difference = adapters[i] - adapters[i - 1];
