@@ -1,0 +1,57 @@
+
+finding tile for seswneswswsenwwnwse
+
+--adding new tile to se--
+
+connect current tile on se to new tile
+connect new tile on nw to current tile
+checking for any tiles connected to e
+checking for any tiles connected to sw
+-- moving to tile on the se--
+
+--adding new tile to sw--
+
+connect current tile on sw to new tile
+connect new tile on ne to current tile
+checking for any tiles connected to se
+checking for any tiles connected to w
+-- moving to tile on the sw--
+-- moving to tile on the ne--
+-- moving to tile on the sw--
+
+--adding new tile to sw--
+
+connect current tile on sw to new tile
+connect new tile on ne to current tile
+checking for any tiles connected to se
+checking for any tiles connected to w
+-- moving to tile on the sw--
+
+--adding new tile to se--
+
+connect current tile on se to new tile
+connect new tile on nw to current tile
+checking for any tiles connected to e
+checking for any tiles connected to sw
+-- moving to tile on the se--
+-- moving to tile on the nw--
+
+--adding new tile to w--
+
+connect current tile on w to new tile
+connect new tile on e to current tile
+checking for any tiles connected to sw
+checking for any tiles connected to nw
+-- moving to tile on the w--
+
+--adding new tile to nw--
+
+connect current tile on nw to new tile
+connect new tile on se to current tile
+checking for any tiles connected to w
+checking for any tiles connected to ne
+-- moving to tile on the nw--
+-- moving to tile on the se--
+flip from white to black and flip count is 1
+white: 6
+black: 1
