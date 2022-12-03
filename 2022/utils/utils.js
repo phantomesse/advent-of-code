@@ -8,7 +8,17 @@ import { readFileSync } from 'fs';
  */
 export function readInput(url, fileName = 'input.txt') {
   if (process.argv.length > 2) fileName = process.argv.slice(-1)[0];
-  return readFileSync(new URL(fileName, url), 'utf-8');
+  return readFileSync(new URL(fileName, url), 'utf-8').trim();
+}
+
+/**
+ * @param {string} url pass in `import.meta.url`
+ * @param {string} fileName default is 'input.txt' but can also be overriden in
+ *                          function parameter or as the first CLI argument
+ * @returns {string[]}
+ */
+export function readLines(url, fileName) {
+  return readInput(url, fileName).split('\n');
 }
 
 /**

@@ -5,7 +5,7 @@ const elves = readInput(import.meta.url)
   .map(lines =>
     lines
       .split('\n')
-      .map(number => parseInt(number) | 0)
+      .map(number => parseInt(number))
       .reduce((a, b) => a + b)
   );
 
