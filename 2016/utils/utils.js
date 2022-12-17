@@ -8,7 +8,7 @@ import { readFileSync } from 'fs';
  */
 export function readInput(url, fileName = 'input.txt') {
   if (process.argv.length > 2) fileName = process.argv.slice(-1)[0];
-  return readFileSync(new URL(fileName, url), 'utf-8');
+  return readFileSync(new URL(fileName, url), 'utf-8').trim();
 }
 
 /**
@@ -17,10 +17,8 @@ export function readInput(url, fileName = 'input.txt') {
  *                          function parameter or as the first CLI argument
  * @returns {string[]}
  */
-export function readLines(url, fileName = 'input.txt') {
-  return readInput(url, fileName)
-    .split('\n')
-    .filter(line => line.length > 0);
+export function readLines(url, fileName) {
+  return readInput(url, fileName).split('\n');
 }
 
 /**
